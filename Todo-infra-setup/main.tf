@@ -10,8 +10,8 @@ module "todo-rg" {
 
 module "todo-rg2" {
   source      = "../../child_module/azurerm_resource_group"
-  rg_name     = "rg-central-us"
-  rg_location = "Central India"
+  rg_name     = "todo-rg-centralus"
+  rg_location = "Central US"
 }
 
 
