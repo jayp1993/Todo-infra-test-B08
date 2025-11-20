@@ -4,7 +4,13 @@ module "todo-rg" {
   rg_name     =each.value.rg_name
   rg_location = each.value.rg_location
 }
-
+#Ticket 102
+#rg-central-india-code
+module "Todo-rg3" {
+  source = "../../Child_module/azurerm_resource_group"
+  rg-name = "rg-central-india"
+  rg-location = "central india"
+}
 
 
 module "todo-vnet" {
