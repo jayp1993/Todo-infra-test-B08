@@ -5,6 +5,15 @@ module "todo-rg" {
   rg_location = each.value.rg_location
 }
 
+#ticket-Ticket:101
+#Requirement : rg-central_us banana hai
+
+module "todo-rg2" {
+  source      = "../../child_module/azurerm_resource_group"
+  rg_name     = "rg-central-us"
+  rg_location = "Central India"
+}
+
 
 
 module "todo-vnet" {
