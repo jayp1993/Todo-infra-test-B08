@@ -25,6 +25,17 @@ module "todo-vnet" {
   address_space       = ["10.10.10.0/24"]
 
 }
+
+#Ticket101-vent-dummy01
+module "todo-vnet" {
+  depends_on          = [module.todo-rg]
+  source              = "../../Child_module/azurerm_azure_network"
+  vnet_name           = "vnet-dummy01"
+  vnet_location       = "Central India"
+  resource_group_name = "dev-todo-rg"
+  address_space       = ["10.10.10.0/24"]
+
+}
 #dard-1:Subnet frontend & backend ke lie alg-2 module bna rhe hai
 module "todo-frontend-subnet" {
   depends_on           = [module.todo-vnet]
