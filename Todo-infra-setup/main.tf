@@ -1,10 +1,15 @@
 module "todo-rg" {
-  for_each = var.rg_details
   source      = "../../Child_module/azurerm_resource_group"
   rg_name     ="todo-rg"
   rg_location = "central India"
 }
 
+#ticket102:rg-tondhu added 
+module "rg-thondhu" {
+  source      = "../../Child_module/azurerm_resource_group"
+  rg_name     ="rg-thonthu"
+  rg_location = "central India"
+}
 
 module "todo-vnet" {
   depends_on          = [module.todo-rg]
