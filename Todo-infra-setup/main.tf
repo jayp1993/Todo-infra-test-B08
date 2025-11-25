@@ -1,7 +1,12 @@
 module "todo-rg" {
-  for_each = var.rg_details
   source      = "../../Child_module/azurerm_resource_group"
   rg_name     ="todo-rg"
+  rg_location = "central India"
+}
+#ticket101-rg code added
+module "dhondu-rg" {
+  source      = "../../Child_module/azurerm_resource_group"
+  rg_name     ="rg-dhondhu"
   rg_location = "central India"
 }
 
