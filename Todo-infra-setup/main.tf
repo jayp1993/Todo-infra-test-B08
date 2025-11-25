@@ -1,19 +1,9 @@
 module "todo-rg" {
   for_each = var.rg_details
   source      = "../../Child_module/azurerm_resource_group"
-  rg_name     =each.value.rg_name
-  rg_location = each.value.rg_location
+  rg_name     ="todo-rg"
+  rg_location = "central India"
 }
-
-#ticket-Ticket:101
-#Requirement : rg-central_us banana hai
-
-module "todo-rg2" {
-  source      = "../../child_module/azurerm_resource_group"
-  rg_name     = "todo-rg-centralus"
-  rg_location = "Central US"
-}
-
 
 
 module "todo-vnet" {
@@ -26,26 +16,7 @@ module "todo-vnet" {
 
 }
 
-#Ticket101-vent-dummy01
-module "todo-vnet" {
-  depends_on          = [module.todo-rg]
-  source              = "../../Child_module/azurerm_azure_network"
-  vnet_name           = "vnet-dummy01"
-  vnet_location       = "Central India"
-  resource_group_name = "dev-todo-rg"
-  address_space       = ["10.10.10.0/24"]
 
-}
-#ticket102-vnet-dummy02 added
-module "todo-vnet" {
-  depends_on          = [module.todo-rg]
-  source              = "../../Child_module/azurerm_azure_network"
-  vnet_name           = "vnet-dummy02"
-  vnet_location       = "Central India"
-  resource_group_name = "dev-todo-rg"
-  address_space       = ["10.10.10.0/24"]
-
-}
 #dard-1:Subnet frontend & backend ke lie alg-2 module bna rhe hai
 module "todo-frontend-subnet" {
   depends_on           = [module.todo-vnet]
