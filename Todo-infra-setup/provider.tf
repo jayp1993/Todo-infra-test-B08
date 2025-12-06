@@ -12,7 +12,7 @@ provider "azurerm" {
   features {
 
   }
-  subscription_id = "cb885852-08f1-49fd-b111-89563bec3dfc"
+  subscription_id = "cb885852-08f1-49fd-b111-89563bec"
   # Configuration options
 
 
