@@ -1,0 +1,50 @@
+trigger: none
+pr: none
+
+pool:
+  name: 'todo-infra-agent-pool'
+
+steps:
+
+# 0️⃣ Do NOT fetch repo code
+- checkout: none
+
+# 2️⃣ Terraform Init (backend config ke sath)
+- task: TerraformTaskV4@4
+  displayName: "Terraform Init (Backend Enabled)"
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    backendServiceArm: 'sp-1'
+    backendAzureRmResourceGroupName: 'test-rg'
+    backendAzureRmStorageAccountName: 'stadummy20234'
+    backendAzureRmContainerName: 'statefile'
+    backendAzureRmKey: 'terraform.tfstate'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/Todo-infra-setup'
+
+# 3️⃣ Terraform Validate
+- task: TerraformTaskV4@4
+  displayName: "Terraform Validate"
+  inputs:
+    provider: 'azurerm'
+    command: 'validate'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/Todo-infra-setup'
+
+# 4️⃣ Terraform Plan
+- task: TerraformTaskV4@4
+  displayName: "Terraform Plan"
+  inputs:
+    provider: 'azurerm'
+    command: 'plan'
+    environmentServiceNameAzureRM: 'sp-1'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/Todo-infra-setup'
+
+# 5️⃣ Terraform Apply
+- task: TerraformTaskV4@4
+  displayName: "Terraform Apply"
+  inputs:
+    provider: 'azurerm'
+    command: 'apply'
+    environmentServiceNameAzureRM: 'sp-1'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/Todo-infra-setup'
+    args: '-auto-approve'
