@@ -1,13 +1,9 @@
 trigger: none
-pr: none
 
 pool:
   name: 'todo-infra-agent-pool'
 
 steps:
-
-# 0️⃣ Do NOT fetch repo code
-- checkout: none
 
 # 2️⃣ Terraform Init (backend config ke sath)
 - task: TerraformTaskV4@4
