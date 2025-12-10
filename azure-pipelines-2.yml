@@ -11,7 +11,7 @@ steps:
     terraformVersion: 'latest'
 
 - task: TerraformTask@5
-  displayName: string # Human-readable name for the task.
+  displayName: "terraform init"
   inputs:
     provider: 'azurerm'
     command: 'init'
