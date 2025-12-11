@@ -71,8 +71,6 @@ steps:
     workingDirectory: $(working_path)
     environmentServiceNameAzureRM: $(service_connection)
 
-
-
 # ----------- APPLY DISABLED ------------
 - task: TerraformTask@5
   displayName: 'Terraform Apply - Disabled on Feature Branch'
