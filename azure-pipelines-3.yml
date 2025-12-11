@@ -1,5 +1,11 @@
-#Pipeline Level
-trigger: none 
+# ==============================
+#  PIPELINE LEVEL
+# ==============================
+
+trigger:
+  branches:
+    include:
+      - feature/*     # -> Feature branches auto-trigger
 
 pool:
   name: todo-infra-agent-pool
@@ -8,7 +14,11 @@ variables:
   working_path: '$(System.DefaultWorkingDirectory)\Todo-infra-setup'
   service_connection: 'sp-1'
 
-#Steps Level
+
+# ==============================
+#  STEPS LEVEL
+# ==============================
+
 steps:
 
 - task: TerraformInstaller@1
@@ -16,6 +26,8 @@ steps:
   inputs:
     terraformVersion: 'latest'
 
+
+# ----------- INIT ------------
 - task: TerraformTask@5
   displayName: 'Terraform Init'
   inputs:
@@ -27,6 +39,8 @@ steps:
     backendAzureRmContainerName: 'statefile-container'
     backendAzureRmKey: 'terraform.tfstate'
 
+
+# ----------- FMT ------------
 - task: TerraformTask@5
   displayName: 'Terraform FMT'
   inputs:
@@ -37,6 +51,8 @@ steps:
     customCommand: 'fmt'
     environmentServiceNameAzureRM: $(service_connection)
 
+
+# ----------- VALIDATE ------------
 - task: TerraformTask@5
   displayName: 'Terraform Validate'
   inputs:
@@ -44,6 +60,9 @@ steps:
     command: 'validate'
     workingDirectory: $(working_path)
     environmentServiceNameAzureRM: $(service_connection)
+
+
+# ----------- PLAN ------------
 - task: TerraformTask@5
   displayName: 'Terraform Plan'
   inputs:
@@ -52,12 +71,10 @@ steps:
     workingDirectory: $(working_path)
     environmentServiceNameAzureRM: $(service_connection)
 
+
+
+# ----------- APPLY DISABLED ------------
 - task: TerraformTask@5
-  displayName: 'Terraform Apply'
-  inputs:
-    provider: 'azurerm'
-    command: 'apply'
-    workingDirectory: $(working_path)
-    environmentServiceNameAzureRM: $(service_connection)
-
-
+  displayName: 'Terraform Apply - Disabled on Feature Branch'
+  condition: and(succeeded(), ne(variables['Build.SourceBranch'], 'refs/heads/main'))
+  enabled: false
