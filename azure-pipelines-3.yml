@@ -6,10 +6,12 @@ pool:
 steps:
 
 - task: TerraformInstaller@1
+  displayName: 'Terraform Installer'
   inputs:
     terraformVersion: 'latest'
 
 - task: TerraformTask@5
+  displayName: 'Terraform Init'
   inputs:
     provider: 'azurerm'
     command: 'init'
@@ -20,6 +22,7 @@ steps:
     backendAzureRmKey: 'terraform.tfstate'
 
 - task: TerraformTask@5
+  displayName: 'Terraform FMT'
   inputs:
     provider: 'azurerm'
     command: 'custom'
@@ -29,12 +32,14 @@ steps:
     environmentServiceNameAzureRM: 'sp-1'
 
 - task: TerraformTask@5
+  displayName: 'Terraform Validate'
   inputs:
     provider: 'azurerm'
     command: 'validate'
     workingDirectory: '$(System.DefaultWorkingDirectory)\Todo-infra-setup'
 
 - task: TerraformTask@5
+  displayName: 'Terraform Plan'
   inputs:
     provider: 'azurerm'
     command: 'plan'
@@ -42,6 +47,7 @@ steps:
     environmentServiceNameAzureRM: 'sp-1'
 
 - task: TerraformTask@5
+  displayName: 'Terraform Apply'
   inputs:
     provider: 'azurerm'
     command: 'apply'
