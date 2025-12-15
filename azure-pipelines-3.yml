@@ -4,10 +4,6 @@ trigger:
       - feature/*
       - main
 
-pr:
-  branches:
-    include:
-      - main
 
 pool:
   name: todo-infra-agent-pool
