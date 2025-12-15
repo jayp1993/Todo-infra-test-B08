@@ -1,5 +1,13 @@
-#Pipeline Level
-trigger: none 
+trigger:
+  branches:
+    include:
+      - feature/*
+      - main
+
+pr:
+  branches:
+    include:
+      - main
 
 pool:
   name: todo-infra-agent-pool
@@ -8,7 +16,6 @@ variables:
   working_path: '$(System.DefaultWorkingDirectory)\Todo-infra-setup'
   service_connection: 'sp-1'
 
-#Steps Level
 steps:
 
 - task: TerraformInstaller@1
@@ -32,9 +39,9 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'custom'
+    customCommand: 'fmt'
     workingDirectory: $(working_path)
     outputTo: 'console'
-    customCommand: 'fmt'
     environmentServiceNameAzureRM: $(service_connection)
 
 - task: TerraformTask@5
@@ -44,6 +51,7 @@ steps:
     command: 'validate'
     workingDirectory: $(working_path)
     environmentServiceNameAzureRM: $(service_connection)
+
 - task: TerraformTask@5
   displayName: 'Terraform Plan'
   inputs:
@@ -54,10 +62,9 @@ steps:
 
 - task: TerraformTask@5
   displayName: 'Terraform Apply'
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
   inputs:
     provider: 'azurerm'
     command: 'apply'
     workingDirectory: $(working_path)
     environmentServiceNameAzureRM: $(service_connection)
-
-
