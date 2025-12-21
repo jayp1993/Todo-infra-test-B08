@@ -13,10 +13,10 @@ steps:
     command: 'init'
     backendServiceArm: 'sp-1'
     backendAzureRmResourceGroupName: 'test-rg'
-    backendAzureRmStorageAccountName: 'stadummy20234'
+    backendAzureRmStorageAccountName: 'lok123lok123'
     backendAzureRmContainerName: 'statefile'
     backendAzureRmKey: 'terraform.tfstate'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/Todo-infra-setup'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/Todo-infra-india'
 
 # 3️⃣ Terraform Validate
 - task: TerraformTaskV4@4
